@@ -79,6 +79,22 @@ function homePage(){
 
 }
 
+function newTab(){
+
+  document
+  .getElementById("frame")
+  .src = "";
+
+  document
+  .getElementById("url")
+  .value = "";
+
+  document
+  .querySelector(".tab")
+  .innerText = "🌐 New Tab";
+
+}
+
 function saveBookmark(){
 
   let url =
