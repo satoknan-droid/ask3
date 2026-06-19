@@ -27,14 +27,15 @@ function go(customUrl){
   .style.display = "block";
 
   document
-    .getElementById("frame")
-    .src =
-      "/api/proxy?url=" +
-      encodeURIComponent(url);
+  .getElementById("frame")
+  .src =
+  "/api/proxy?url=" +
+  encodeURIComponent(url);
 
   document
   .getElementById("tabTitle")
-  .innerText = "🌐 " + url;
+  .innerText =
+  "🌐 " + url;
 }
 
 function back(){
@@ -77,6 +78,10 @@ function homePage(){
   .getElementById("url")
   .value = "";
 
+  document
+  .getElementById("tabTitle")
+  .innerText =
+  "🌐 Home";
 }
 
 function newTab(){
@@ -91,7 +96,8 @@ function newTab(){
 
   document
   .getElementById("tabTitle")
-  .innerText = "🌐 New Tab";
+  .innerText =
+  "🌐 New Tab";
 
 }
 
@@ -107,7 +113,8 @@ function closeTab(){
 
   document
   .getElementById("tabTitle")
-  .innerText = "❌ Closed";
+  .innerText =
+  "❌ Closed";
 
 }
 
