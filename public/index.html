@@ -1,8 +1,9 @@
 <script>
 
-function go(){
+function go(customUrl){
 
   let url =
+    customUrl ||
     document.getElementById("url").value;
 
   if(!url.includes(".")){
@@ -62,6 +63,59 @@ function reloadPage(){
 
 }
 
+function saveBookmark(){
+
+  let url =
+    document.getElementById("url").value;
+
+  let bookmarks =
+    JSON.parse(
+      localStorage.getItem("bookmarks")
+      || "[]"
+    );
+
+  bookmarks.push(url);
+
+  localStorage.setItem(
+    "bookmarks",
+    JSON.stringify(bookmarks)
+  );
+
+  renderBookmarks();
+}
+
+function renderBookmarks(){
+
+  let container =
+    document.getElementById("bookmarks");
+
+  container.innerHTML = "";
+
+  let bookmarks =
+    JSON.parse(
+      localStorage.getItem("bookmarks")
+      || "[]"
+    );
+
+  bookmarks.forEach(url => {
+
+    let div =
+      document.createElement("div");
+
+    div.className = "bookmark";
+
+    div.innerText = url;
+
+    div.onclick = function(){
+      go(url);
+    };
+
+    container.appendChild(div);
+
+  });
+
+}
+
 document
 .getElementById("url")
 .addEventListener("keypress", function(e){
@@ -86,5 +140,7 @@ document
 .getElementById("url")
 .value =
 localStorage.getItem("lastUrl") || "";
+
+renderBookmarks();
 
 </script>
