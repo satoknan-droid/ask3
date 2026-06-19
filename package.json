@@ -1,5 +1,47 @@
 {
-  "name": "mini-proxy",
-  "version": "1.0.0",
-  "type": "module"
+  "name": "ask-browser",
+  "version": "2.0.0",
+  "description": "ASK Browser - Mini Proxy Browser",
+  "type": "module",
+
+  "scripts": {
+
+    "start": "node api/proxy.js",
+
+    "dev": "vercel dev",
+
+    "build": "echo Build Complete"
+
+  },
+
+  "keywords": [
+
+    "browser",
+    "proxy",
+    "vercel",
+    "webapp",
+    "ask-browser",
+    "mini-browser",
+    "proxy-browser"
+
+  ],
+
+  "author": "ASK",
+
+  "license": "MIT",
+
+  "dependencies": {
+
+    "axios": "^1.7.2",
+
+    "cheerio": "^1.0.0"
+
+  },
+
+  "engines": {
+
+    "node": ">=18"
+
+  }
+
 }
