@@ -154,18 +154,50 @@ function renderBookmarks(){
       || "[]"
     );
 
-  bookmarks.forEach(url => {
+  bookmarks.forEach((url, index) => {
 
     let div =
       document.createElement("div");
 
     div.className = "bookmark";
 
-    div.innerText = url;
+    let text =
+      document.createElement("span");
 
-    div.onclick = function(){
+    text.innerText = url;
+
+    text.onclick = function(){
       go(url);
     };
+
+    let del =
+      document.createElement("span");
+
+    del.innerText = " ✕";
+
+    del.style.color = "red";
+
+    del.style.marginLeft = "10px";
+
+    del.style.cursor = "pointer";
+
+    del.onclick = function(e){
+
+      e.stopPropagation();
+
+      bookmarks.splice(index, 1);
+
+      localStorage.setItem(
+        "bookmarks",
+        JSON.stringify(bookmarks)
+      );
+
+      renderBookmarks();
+    };
+
+    div.appendChild(text);
+
+    div.appendChild(del);
 
     container.appendChild(div);
 
