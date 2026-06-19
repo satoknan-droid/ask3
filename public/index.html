@@ -10,6 +10,10 @@ function go(){
   }
 
   document
+  .getElementById("loading")
+  .style.display = "block";
+
+  document
     .getElementById("frame")
     .src =
       "/api/proxy?url=" +
@@ -25,5 +29,15 @@ document
   }
 
 });
+
+document
+.getElementById("frame")
+.onload = function(){
+
+  document
+  .getElementById("loading")
+  .style.display = "none";
+
+}
 
 </script>
