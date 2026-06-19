@@ -1,3 +1,5 @@
+import cheerio from "cheerio";
+
 export default async function handler(req, res) {
 
   let url = req.query.url;
@@ -43,40 +45,108 @@ export default async function handler(req, res) {
 
     });
 
-    let text =
+    let html =
       await response.text();
 
-    text = text
+    const $ =
+      cheerio.load(html);
 
-    .replace(
-      /href="\//g,
-      `href="${url}/`
-    )
+    $("script").each((i, el) => {
 
-    .replace(
-      /src="\//g,
-      `src="${url}/`
-    )
+      let src =
+        $(el).attr("src");
 
-    .replace(
-      /action="\//g,
-      `action="${url}/`
-    )
+      if(
+        src &&
+        src.startsWith("/")
+      ){
 
-    .replace(
-      /<title>(.*?)<\/title>/,
-      "<title>ASK Browser</title>"
-    )
+        $(el).attr(
+          "src",
+          new URL(src, url).href
+        );
 
-    .replace(
-      /integrity=".*?"/g,
-      ""
-    )
+      }
 
-    .replace(
-      /crossorigin=".*?"/g,
-      ""
+    });
+
+    $("link").each((i, el) => {
+
+      let href =
+        $(el).attr("href");
+
+      if(
+        href &&
+        href.startsWith("/")
+      ){
+
+        $(el).attr(
+          "href",
+          new URL(href, url).href
+        );
+
+      }
+
+    });
+
+    $("img").each((i, el) => {
+
+      let src =
+        $(el).attr("src");
+
+      if(
+        src &&
+        src.startsWith("/")
+      ){
+
+        $(el).attr(
+          "src",
+          new URL(src, url).href
+        );
+
+      }
+
+    });
+
+    $("form").each((i, el) => {
+
+      let action =
+        $(el).attr("action");
+
+      if(
+        action &&
+        action.startsWith("/")
+      ){
+
+        $(el).attr(
+          "action",
+          new URL(action, url).href
+        );
+
+      }
+
+    });
+
+    $("title").text(
+      "ASK Browser"
     );
+
+    $("meta").each((i, el) => {
+
+      const httpEquiv =
+        $(el).attr("http-equiv");
+
+      if(
+        httpEquiv &&
+        httpEquiv.toLowerCase()
+        === "content-security-policy"
+      ){
+
+        $(el).remove();
+
+      }
+
+    });
 
     res.setHeader(
       "Content-Type",
@@ -98,7 +168,9 @@ export default async function handler(req, res) {
       "no-cache"
     );
 
-    res.status(200).send(text);
+    res.status(200).send(
+      $.html()
+    );
 
   } catch (err) {
 
