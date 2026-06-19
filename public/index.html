@@ -120,6 +120,39 @@ function closeTab(){
 
 }
 
+function toggleSettings(){
+
+  let panel =
+    document.getElementById("settingsPanel");
+
+  if(panel.style.display === "block"){
+
+    panel.style.display = "none";
+
+  }
+
+  else{
+
+    panel.style.display = "block";
+
+  }
+
+}
+
+function clearHistory(){
+
+  localStorage.removeItem("history");
+
+  renderHistory();
+}
+
+function clearBookmarks(){
+
+  localStorage.removeItem("bookmarks");
+
+  renderBookmarks();
+}
+
 function saveBookmark(){
 
   let url =
@@ -165,7 +198,7 @@ function renderBookmarks(){
       document.createElement("span");
 
     text.innerHTML = `
-      <img src="https://www.google.com/s?domain=${url}
+      <imgs://www.google.com/s2/favicons?domain=${url}
       ${url}
     `;
 
@@ -249,7 +282,7 @@ function renderHistory(){
     div.className = "historyItem";
 
     div.innerHTML = `
-      <img src="w.google.com/s2/favicons?domain=${url}
+      <img src="https://.com/s2/favicons?domain=${url}
       ${url}
     `;
 
