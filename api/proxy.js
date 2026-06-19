@@ -1,24 +1,16 @@
-import cheerio from "cheerio";
-
 export default async function handler(req, res) {
 
   let url = req.query.url;
 
   if (!url) {
-
-    return res
-    .status(400)
-    .send("No URL");
-
+    return res.status(400).send("No URL");
   }
 
   if (
     !url.startsWith("http://") &&
     !url.startsWith("https://")
   ) {
-
     url = "https://" + url;
-
   }
 
   try {
@@ -26,55 +18,17 @@ export default async function handler(req, res) {
     const response = await fetch(url, {
 
       headers: {
-
-        "User-Agent":
-        "Mozilla/5.0"
-
+        "User-Agent": "Mozilla/5.0"
       }
 
     });
 
-    const html =
+    let text =
       await response.text();
 
-    const $ =
-      cheerio.load(html);
-
-    $("title").text(
-      "ASK Browser"
-    );
-
-    $("img").each((i, el) => {
-
-      let src =
-        $(el).attr("src");
-
-      if(src && src.startsWith("/")){
-
-        $(el).attr(
-          "src",
-          new URL(src, url).href
-        );
-
-      }
-
-    });
-
-    $("link").each((i, el) => {
-
-      let href =
-        $(el).attr("href");
-
-      if(href && href.startsWith("/")){
-
-        $(el).attr(
-          "href",
-          new URL(href, url).href
-        );
-
-      }
-
-    });
+    text = text
+      .replace(/href="\//g, `href="${url}/`)
+      .replace(/src="\//g, `src="${url}/`);
 
     res.setHeader(
       "Content-Type",
@@ -86,13 +40,9 @@ export default async function handler(req, res) {
       "*"
     );
 
-    res.status(200).send(
-      $.html()
-    );
+    res.status(200).send(text);
 
   } catch(err){
-
-    console.error(err);
 
     res.status(500).send(`
 
