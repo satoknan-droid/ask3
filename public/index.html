@@ -153,6 +153,49 @@ function clearBookmarks(){
   renderBookmarks();
 }
 
+function setTheme(theme){
+
+  document.body.className = "";
+
+  if(theme === "dark"){
+
+    document.body.classList.add(
+      "darkTheme"
+    );
+
+  }
+
+  if(theme === "blue"){
+
+    document.body.classList.add(
+      "blueTheme"
+    );
+
+  }
+
+  if(theme === "red"){
+
+    document.body.classList.add(
+      "redTheme"
+    );
+
+  }
+
+  if(theme === "green"){
+
+    document.body.classList.add(
+      "greenTheme"
+    );
+
+  }
+
+  localStorage.setItem(
+    "theme",
+    theme
+  );
+
+}
+
 function saveBookmark(){
 
   let url =
@@ -198,8 +241,7 @@ function renderBookmarks(){
       document.createElement("span");
 
     text.innerHTML = `
-      <imgs://www.google.com/s2/favicons?domain=${url}
-      ${url}
+      <img src="https://www.google.com/s2/favicons?domain=${urlurl}
     `;
 
     text.onclick = function(){
@@ -282,7 +324,7 @@ function renderHistory(){
     div.className = "historyItem";
 
     div.innerHTML = `
-      <img src="https://.com/s2/favicons?domain=${url}
+      https://www.google.com/s2/favicons?domain=${url}
       ${url}
     `;
 
@@ -324,6 +366,15 @@ localStorage.getItem("lastUrl") || "";
 renderBookmarks();
 
 renderHistory();
+
+const savedTheme =
+localStorage.getItem("theme");
+
+if(savedTheme){
+
+  setTheme(savedTheme);
+
+}
 
 const suggestions = [
 
