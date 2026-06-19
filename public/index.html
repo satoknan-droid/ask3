@@ -9,6 +9,8 @@ function go(){
     url = "https://" + url;
   }
 
+  localStorage.setItem("lastUrl", url);
+
   document
   .getElementById("loading")
   .style.display = "block";
@@ -39,5 +41,10 @@ document
   .style.display = "none";
 
 }
+
+document
+.getElementById("url")
+.value =
+localStorage.getItem("lastUrl") || "";
 
 </script>
