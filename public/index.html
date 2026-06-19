@@ -63,6 +63,18 @@ function reloadPage(){
 
 }
 
+function homePage(){
+
+  document
+  .getElementById("frame")
+  .src = "";
+
+  document
+  .getElementById("url")
+  .value = "";
+
+}
+
 function saveBookmark(){
 
   let url =
@@ -144,3 +156,4 @@ localStorage.getItem("lastUrl") || "";
 renderBookmarks();
 
 </script>
+``
