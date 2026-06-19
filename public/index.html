@@ -32,6 +32,16 @@ function go(){
       encodeURIComponent(url);
 }
 
+function back(){
+
+  document
+  .getElementById("frame")
+  .contentWindow
+  .history
+  .back();
+
+}
+
 document
 .getElementById("url")
 .addEventListener("keypress", function(e){
@@ -58,3 +68,4 @@ document
 localStorage.getItem("lastUrl") || "";
 
 </script>
+``
