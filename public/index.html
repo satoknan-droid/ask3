@@ -22,6 +22,8 @@ function go(customUrl){
 
   localStorage.setItem("lastUrl", url);
 
+  saveHistory(url);
+
   document
   .getElementById("loading")
   .style.display = "block";
@@ -171,6 +173,58 @@ function renderBookmarks(){
 
 }
 
+function saveHistory(url){
+
+  let history =
+    JSON.parse(
+      localStorage.getItem("history")
+      || "[]"
+    );
+
+  history.unshift(url);
+
+  history = history.slice(0, 10);
+
+  localStorage.setItem(
+    "history",
+    JSON.stringify(history)
+  );
+
+  renderHistory();
+}
+
+function renderHistory(){
+
+  let container =
+    document.getElementById("history");
+
+  container.innerHTML = "";
+
+  let history =
+    JSON.parse(
+      localStorage.getItem("history")
+      || "[]"
+    );
+
+  history.forEach(url => {
+
+    let div =
+      document.createElement("div");
+
+    div.className = "historyItem";
+
+    div.innerText = url;
+
+    div.onclick = function(){
+      go(url);
+    };
+
+    container.appendChild(div);
+
+  });
+
+}
+
 document
 .getElementById("url")
 .addEventListener("keypress", function(e){
@@ -197,5 +251,7 @@ document
 localStorage.getItem("lastUrl") || "";
 
 renderBookmarks();
+
+renderHistory();
 
 </script>
