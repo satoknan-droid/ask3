@@ -33,7 +33,7 @@ function go(customUrl){
       encodeURIComponent(url);
 
   document
-  .querySelector(".tab")
+  .getElementById("tabTitle")
   .innerText = "🌐 " + url;
 }
 
@@ -90,8 +90,24 @@ function newTab(){
   .value = "";
 
   document
-  .querySelector(".tab")
+  .getElementById("tabTitle")
   .innerText = "🌐 New Tab";
+
+}
+
+function closeTab(){
+
+  document
+  .getElementById("frame")
+  .src = "";
+
+  document
+  .getElementById("url")
+  .value = "";
+
+  document
+  .getElementById("tabTitle")
+  .innerText = "❌ Closed";
 
 }
 
