@@ -164,7 +164,10 @@ function renderBookmarks(){
     let text =
       document.createElement("span");
 
-    text.innerText = url;
+    text.innerHTML = `
+      <img src="https://www.google.com/s?domain=${url}
+      ${url}
+    `;
 
     text.onclick = function(){
       go(url);
@@ -245,7 +248,10 @@ function renderHistory(){
 
     div.className = "historyItem";
 
-    div.innerText = url;
+    div.innerHTML = `
+      <img src="w.google.com/s2/favicons?domain=${url}
+      ${url}
+    `;
 
     div.onclick = function(){
       go(url);
