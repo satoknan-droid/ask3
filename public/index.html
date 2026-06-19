@@ -286,4 +286,61 @@ renderBookmarks();
 
 renderHistory();
 
+const suggestions = [
+
+  "youtube.com",
+  "google.com",
+  "wikipedia.org",
+  "github.com",
+  "chatgpt.com",
+  "minecraft.net",
+  "vercel.com"
+
+];
+
+document
+.getElementById("url")
+.addEventListener("input", function(){
+
+  let value =
+    this.value.toLowerCase();
+
+  let container =
+    document.getElementById("suggestions");
+
+  container.innerHTML = "";
+
+  if(value === "") return;
+
+  suggestions.forEach(site => {
+
+    if(site.includes(value)){
+
+      let div =
+        document.createElement("div");
+
+      div.className =
+        "suggestion";
+
+      div.innerText = site;
+
+      div.onclick = function(){
+
+        document
+        .getElementById("url")
+        .value = site;
+
+        container.innerHTML = "";
+
+        go();
+      };
+
+      container.appendChild(div);
+
+    }
+
+  });
+
+});
+
 </script>
