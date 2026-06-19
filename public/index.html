@@ -31,6 +31,10 @@ function go(customUrl){
     .src =
       "/api/proxy?url=" +
       encodeURIComponent(url);
+
+  document
+  .querySelector(".tab")
+  .innerText = "🌐 " + url;
 }
 
 function back(){
@@ -156,4 +160,3 @@ localStorage.getItem("lastUrl") || "";
 renderBookmarks();
 
 </script>
-``
