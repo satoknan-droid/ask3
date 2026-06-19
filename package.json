@@ -1,46 +1,98 @@
-{
-  "name": "ask-browser",
-  "version": "2.0.0",
-  "description": "ASK Browser - Mini Proxy Browser",
-  "type": "module",
+export default async function handler(req, res) {
 
-  "scripts": {
+  let url = req.query.url;
 
-    "start": "node api/proxy.js",
+  if (!url) {
 
-    "dev": "vercel dev",
+    return res
+      .status(400)
+      .send("No URL");
 
-    "build": "echo Build Complete"
+  }
 
-  },
+  if (
+    !url.startsWith("http://") &&
+    !url.startsWith("https://")
+  ) {
 
-  "keywords": [
+    url = "https://" + url;
 
-    "browser",
-    "proxy",
-    "vercel",
-    "webapp",
-    "ask-browser",
-    "mini-browser",
-    "proxy-browser"
+  }
 
-  ],
+  try {
 
-  "author": "ASK",
+    const response = await fetch(url, {
 
-  "license": "MIT",
+      headers: {
 
-  "dependencies": {
+        "User-Agent":
+        "Mozilla/5.0"
 
-    "axios": "^1.7.2",
+      }
 
-    "cheerio": "^1.0.0"
+    });
 
-  },
+    let text =
+      await response.text();
 
-  "engines": {
+    text = text
 
-    "node": ">=18"
+      .replace(
+        /href="\//g,
+        `href="${url}/`
+      )
+
+      .replace(
+        /src="\//g,
+        `src="${url}/`
+      )
+
+      .replace(
+        /action="\//g,
+        `action="${url}/`
+      );
+
+    res.setHeader(
+      "Content-Type",
+      "text/html"
+    );
+
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "*"
+    );
+
+    res.status(200).send(text);
+
+  } catch(err){
+
+    console.error(err);
+
+    res.status(500).send(`
+
+    <html>
+
+    <body style="
+      background:#111;
+      color:white;
+      font-family:sans-serif;
+      text-align:center;
+      padding-top:100px;
+    ">
+
+    <h1>
+    Proxy Error
+    </h1>
+
+    <p>
+    ${err}
+    </p>
+
+    </body>
+
+    </html>
+
+    `);
 
   }
 
